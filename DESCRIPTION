@@ -1,0 +1,26 @@
+Package: ecotaxatools
+Type: Package
+Title: EcoTaxa tools
+Version: 0.1.0
+Author: P. Kostyrka
+Maintainer: <pierre.kostyrka@imev-mer.fr>
+Description: This package can compute biovolumes from a ecotaxa tsv file and gives an overview of the data.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    DataEditR,
+    dplyr,
+    tidyr,
+    ggplot2,
+    ggpubr,
+    RColorBrewer,
+    readr,
+    rnaturalearth,
+    rnaturalearthdata,
+    scales,
+    sf,
+    svDialogs,
+    vegan,
+    viridis
+RoxygenNote: 7.2.3

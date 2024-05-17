@@ -1,0 +1,77 @@
+#' check_metadata
+#'
+#' Check the metadata of all samples in a project.
+#'
+#' @param path path to the directory containing all the tsv files
+#' @param output path to the output directory where the results are saved
+#'
+#' @return return a metadata resume of the directory and save the results
+#' @export
+#'
+#' @examples
+check_metadata <- function(path, output) {
+
+  if (!file.exists(file.path(output,"metadata"))) {
+    dir.create(file.path(output,"metadata"))
+  }
+
+  meta_file <- function(x) {
+    metadata <- read_tsv(x, col_types = list(object_time=col_time(),
+                                            object_annotation_time=col_time())) %>%
+      group_by(object_label) %>% mutate(ghost_id=1:n()) %>% ungroup %>%
+      mutate(unique_id = paste(acq_id,sample_operator,ghost_id,
+                               object_date,object_time,
+                               object_lat,object_lon,sep="_")) %>%
+      group_by(unique_id) %>%
+      mutate(number_object = n(),
+             percentValidated = sum(object_annotation_status=="validated", na.rm=T)/n()*100) %>%
+      ungroup() %>%
+      select(sample_id,
+             acq_id,
+             unique_id,
+             ghost_id,
+             object_date,
+             object_time,
+             object_lat,
+             object_lon,
+             sample_id,
+             sample_operator,
+             percentValidated,
+             number_object,
+
+             sample_total_volume,
+             sample_concentrated_sample_volume,
+             acq_celltype,
+             acq_imaged_volume,
+             process_pixel,
+             sample_dilution_factor) %>%
+      distinct()
+
+    return(metadata)
+  }
+
+  metadata <- do.call("rbind", lapply(path, meta_file))
+  metadata[is.na(metadata)] <- 1
+  metadata <- arrange(metadata, object_date, object_time)
+  write_csv2(metadata, file.path(output,"metadata","original_metadata.csv"))
+  print("Original metadata saved.")
+
+  check <- metadata %>% group_by(sample_id) %>% summarize(nb=n())
+  check <- max(check$nb, na.rm=T)
+  if (check>1){
+    dlg_message("Warning ! Some of your samples have more than one acquisition. Be sure that they belong to the same sample. If not, please create a different tsv file for the supplementary acquisition and restart the process.", type="ok")
+  }
+
+  time <- format(Sys.time(), "%d-%m-%Y_%H%M")
+  dlg_message("You can now edit metadata (click on SYNCHRONIZE and DONE button to update edition). The original .tsv files will not be edited. NA are replaced by 1. Do not change the unique_id.", type="ok")
+
+  metadata$object_date <- as.character(metadata$object_date)
+  metadata$object_time <- as.character(metadata$object_time)
+  metadata <- data_edit(metadata, write_fun = "write_csv2",
+                        save_as=file.path(output, "metadata",
+                                          paste0("edited_metadata_",
+                                                 time,
+                                                 ".csv")), viewer="pane")
+  print("Edited metadata saved.")
+  return(metadata)
+}
