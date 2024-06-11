@@ -8,4 +8,12 @@
 \description{
 This package can compute biovolumes from a ecotaxa tsv file and gives an overview of the data.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/pkostyrka/ecotaxatools}
+  \item Report bugs at \url{https://github.com/pkostyrka/ecotaxatools/issues}
+}
+
+}
 \keyword{internal}
