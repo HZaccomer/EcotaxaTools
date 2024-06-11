@@ -2,15 +2,19 @@
 
 #' add.zoo
 #'
-#' Add trophic levels and OTU.
+#' Add trophic levels and OTU from a database constructed within the package, or external.
+#' Type = OTU main
+#' Sub_Type = OTU sub type
+#' Value = Trophic level
 #'
-#' @param taxo taxonomic table generated with "add_taxo"
+#' @param taxo OTU table generated with "add_taxo" containing trophic levels and main OTU groups.
 #'
 #' @return A taxonomic table with also trophic levels.
 #' @export
 #'
 #' @examples
 add.zoo <- function(taxo){
+  # load the original database of OTU and make it "clean"
   zo <- zooregroup_zooscan
   zoo <- merge(taxo, zo, all.x=T)
   zoo$Type[zoo$n1=="temporary"] <- "temporary"
@@ -19,6 +23,7 @@ add.zoo <- function(taxo){
   zoo$Sub_type[zoo$n1=="not-living"] <- zoo$n2[zoo$n1=="not-living"]
   zoo$Value[zoo$Type=="non_living"] <- -1
 
+  # find  objects who are not in the otu database
   liste.choix <- zo %>% mutate(Category=paste0(zo$Type,">",zo$Sub_type)) %>%
     select(-object_annotation_hierarchy2, -Value) %>% distinct()
   liste.value <- unique(zo$Value)
@@ -29,7 +34,7 @@ add.zoo <- function(taxo){
                                   "If no, you can also import an existing database or ignore them.\n",non)),
                           type="yesno")$res
     if(yesno2=="yes") {
-      # You can edit the new taxa
+      # You can edit the new taxa in the database
       replace <- data.frame(object_annotation_hierarchy2=non, Category="temporary>temporary", Value=NA)
       replace <- data_edit(replace,
                            col_options = list(Category = c(liste.choix$Category),
