@@ -82,7 +82,7 @@ routine_planktoscope_ecotaxa <- function() {
   write_csv2(t, file.path(path.resume, "AB.csv"))
 
   # Unite taxonomiques
-  taxo <- add.taxo(unique(bss$object_annotation_hierarchy)) %>% add.zoo
+  taxo <- add.taxo(unique(bss$object_annotation_hierarchy)) %>% add.zoo(., output)
 
   # Search for metadata if not loaded already
   if(!exists("metadata")){

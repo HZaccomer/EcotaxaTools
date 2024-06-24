@@ -8,12 +8,13 @@
 #' Value = Trophic level
 #'
 #' @param taxo OTU table generated with "add_taxo" containing trophic levels and main OTU groups.
+#' @param output file output to save the new zoo table if edited.
 #'
 #' @return A taxonomic table with also trophic levels.
 #' @export
 #'
 #' @examples
-add.zoo <- function(taxo){
+add.zoo <- function(taxo, output){
   # load the original database of OTU and make it "clean"
   zo <- zooregroup_zooscan
   zoo <- merge(taxo, zo, all.x=T)
