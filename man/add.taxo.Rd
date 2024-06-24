@@ -4,14 +4,14 @@
 \alias{add.taxo}
 \title{add.taxo}
 \usage{
-add.taxo(object_hierarchy_list)
+add.taxo(object_hierarchy_vector)
 }
 \arguments{
-\item{object_hierarchy_list}{List of object annotation hierarchy.}
+\item{object_hierarchy_vector}{Vector of object annotation hierarchy.}
 }
 \value{
 Return a taxonomic table.
 }
 \description{
-Return a taxonomic table.
+Return a taxonomic table with different levels per column based on annotation hierarchy.
 }

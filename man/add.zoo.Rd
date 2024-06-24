@@ -7,11 +7,14 @@
 add.zoo(taxo)
 }
 \arguments{
-\item{taxo}{taxonomic table generated with "add_taxo"}
+\item{taxo}{OTU table generated with "add_taxo" containing trophic levels and main OTU groups.}
 }
 \value{
 A taxonomic table with also trophic levels.
 }
 \description{
-Add trophic levels and OTU.
+Add trophic levels and OTU from a database constructed within the package, or external.
+Type = OTU main
+Sub_Type = OTU sub type
+Value = Trophic level
 }
