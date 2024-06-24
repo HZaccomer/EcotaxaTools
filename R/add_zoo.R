@@ -39,7 +39,8 @@ add.zoo <- function(taxo, output){
       replace <- data.frame(object_annotation_hierarchy2=non, Category="temporary>temporary", Value=NA)
       replace <- data_edit(replace,
                            col_options = list(Category = c(liste.choix$Category),
-                                              Value = c(liste.value)), viewer="pane")
+                                              Value = as.character(c(liste.value))), viewer="pane")
+      replace$Value <- as.numeric(replace$Value)
       replace <- replace %>% separate(Category, into=c("Type","Sub_type"))
       zo <- bind_rows(zo, replace) %>% as.data.frame()
       write_csv2(zo, file.path(output,"metadata", "zoo.csv"))
