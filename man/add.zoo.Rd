@@ -4,10 +4,12 @@
 \alias{add.zoo}
 \title{add.zoo}
 \usage{
-add.zoo(taxo)
+add.zoo(taxo, output)
 }
 \arguments{
 \item{taxo}{OTU table generated with "add_taxo" containing trophic levels and main OTU groups.}
+
+\item{output}{file output to save the new zoo table if edited.}
 }
 \value{
 A taxonomic table with also trophic levels.
