@@ -27,7 +27,7 @@ add.zoo <- function(taxo, output){
   # find  objects who are not in the otu database
   liste.choix <- zo %>% mutate(Category=paste0(zo$Type,">",zo$Sub_type)) %>%
     select(-object_annotation_hierarchy2, -Value) %>% distinct()
-  liste.value <- unique(zo$Value) %>% as.character() %>% gsub(".", ",", ., fixed = TRUE)
+  liste.value <- unique(zo$Value) %>% as.character() %>% gsub(".", ",", ., fixed = TRUE) %>% paste0("_",.)
   non <- zoo$object_annotation_hierarchy2[is.na(zoo$Type)]
 
   if(sum(is.na(zoo$Type)>0)) {
@@ -40,7 +40,7 @@ add.zoo <- function(taxo, output){
       replace <- data_edit(replace,
                            col_options = list(Category = c(liste.choix$Category),
                                               Value = c(liste.value)), viewer="pane")
-      replace$Value <- gsub(",", ".", replace$Value, fixed = TRUE) %>% as.numeric()
+      replace$Value <- gsub(",", ".", replace$Value, fixed = TRUE) %>% gsub('_', '', .) %>% as.numeric()
       replace <- replace %>% separate(Category, into=c("Type","Sub_type"))
       zo <- bind_rows(zo, replace) %>% as.data.frame()
       write_csv2(zo, file.path(output,"metadata", "zoo.csv"))
