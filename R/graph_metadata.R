@@ -18,7 +18,15 @@ graph.metadata <- function(metadata) {
   lonmin <- min(metadata$object_lon, na.rm=T)-ex
   latmax <- max(metadata$object_lat, na.rm=T)+ex
   lonmax <- max(metadata$object_lon, na.rm=T)+ex
+
+  if(latmin<(-90)) latmin <- (-90)
+  if(lonmin<(-180)) lonmin <- -180
+  if(latmax>90) latmax <- 90
+  if(lonmax>180) lonmax <- 180
+
   metadata$time <- as.POSIXct(paste(metadata$object_date, metadata$object_time))
+
+  sf_use_s2(FALSE)
 
   worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf') %>%
     st_crop(xmin=lonmin, xmax=lonmax, ymax=latmax, ymin=latmin)
@@ -28,6 +36,8 @@ graph.metadata <- function(metadata) {
           geom_sf(data = worldmap, color=NA, fill="gray54") +
           geom_sf(data = meta.point, size=3, aes(color=time)) +
           theme_bw())
+
+  sf_use_s2(TRUE)
 
   # 2. DATE and TIME
   print(ggplot(metadata, aes(x=time, y=reorder(sample_id, time, decreasing=T), color=as.factor(ghost_id))) +
