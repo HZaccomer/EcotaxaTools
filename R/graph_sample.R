@@ -117,6 +117,8 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   x$categorie[x$Value==2] <- "Grazers"
   x$categorie[x$Value==2.5] <- "Omnivorous"
   x$categorie[x$Value==3] <- "Predators"
+  x$categorie[x$Value==3.5] <- "Unknown"
+  x$categorie[x$Value==-1] <- "None"
 
   p7 <- ggplot(x, aes(x=reorder(categorie,Value), y=BV)) +
     geom_col() +
@@ -128,21 +130,21 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
 
   # Map
   meta.x <- filter(metadata, sample_id==unique(x$sample_id))
-  ex = 3
-  latmin <- min(meta.x$object_lat, na.rm=T)-ex
-  lonmin <- min(meta.x$object_lon, na.rm=T)-ex
-  latmax <- max(meta.x$object_lat, na.rm=T)+ex
-  lonmax <- max(meta.x$object_lon, na.rm=T)+ex
+  # ex = 3
+  # latmin <- min(meta.x$object_lat, na.rm=T)-ex
+  # lonmin <- min(meta.x$object_lon, na.rm=T)-ex
+  # latmax <- max(meta.x$object_lat, na.rm=T)+ex
+  # lonmax <- max(meta.x$object_lon, na.rm=T)+ex
+  #
+  # if(latmin<(-90)) latmin <- (-90)
+  # if(lonmin<(-180)) lonmin <- -180
+  # if(latmax>90) latmax <- 90
+  # if(lonmax>180) lonmax <- 180
 
-  if(latmin<(-90)) latmin <- (-90)
-  if(lonmin<(-180)) lonmin <- -180
-  if(latmax>90) latmax <- 90
-  if(lonmax>180) lonmax <- 180
+  # sf_use_s2(FALSE)
 
-  sf_use_s2(FALSE)
-
-  worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf') %>%
-    st_crop(xmin=lonmin, xmax=lonmax, ymax=latmax, ymin=latmin)
+  worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf')
+  #  st_crop(xmin=lonmin, xmax=lonmax, ymax=latmax, ymin=latmin)
   meta.point <- st_as_sf(meta.x, coords=c("object_lon","object_lat"), crs=st_crs(worldmap))
 
   p8 <- ggplot() +
@@ -155,7 +157,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
                  ncol=4, nrow=2) %>%
     annotate_figure(top=unique(x$sample_id), fig.lab.face="bold")
 
-  sf_use_s2(TRUE)
+  # sf_use_s2(TRUE)
 
   return(g)
 }
