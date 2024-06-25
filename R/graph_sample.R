@@ -134,6 +134,13 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   latmax <- max(meta.x$object_lat, na.rm=T)+ex
   lonmax <- max(meta.x$object_lon, na.rm=T)+ex
 
+  if(latmin<(-90)) latmin <- (-90)
+  if(lonmin<(-180)) lonmin <- -180
+  if(latmax>90) latmax <- 90
+  if(lonmax>180) lonmax <- 180
+
+  sf_use_s2(FALSE)
+
   worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf') %>%
     st_crop(xmin=lonmin, xmax=lonmax, ymax=latmax, ymin=latmin)
   meta.point <- st_as_sf(meta.x, coords=c("object_lon","object_lat"), crs=st_crs(worldmap))
@@ -147,6 +154,8 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
                  common.legend = T, legend="bottom",
                  ncol=4, nrow=2) %>%
     annotate_figure(top=unique(x$sample_id), fig.lab.face="bold")
+
+  sf_use_s2(TRUE)
 
   return(g)
 }
