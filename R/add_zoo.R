@@ -37,7 +37,7 @@ add.zoo <- function(taxo, output){
                           type="yesno")$res
     if(yesno2=="yes") {
       # You can edit the new taxa in the database
-      replace <- data.frame(object_annotation_hierarchy2=non, Category="temporary>temporary", Value=NA)
+      replace <- data.frame(object_annotation_hierarchy2=non, Category="temporary>temporary", Trophic=NA)
       replace <- data_edit(replace,
                            col_options = list(Category = c(liste.choix$Category),
                                               Trophic = c(liste.value$Trophic)), viewer="pane")
