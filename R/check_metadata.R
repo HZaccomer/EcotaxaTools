@@ -38,6 +38,7 @@ check_metadata <- function(path, output) {
              sample_operator,
              percentValidated,
              number_object,
+             acq_nb_frame,
 
              sample_total_volume,
              sample_concentrated_sample_volume,

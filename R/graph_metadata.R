@@ -51,7 +51,7 @@ graph.metadata <- function(metadata) {
                 legend.position = "top"))
 
   # 3. METADATA
-  metadata.long <- pivot_longer(metadata, 10:17) %>% arrange(time)
+  metadata.long <- pivot_longer(metadata, 10:18) %>% arrange(time)
   id <- unique(metadata$sample_id)
   nb <- length(id)
   n <- ceiling(nb/10)
