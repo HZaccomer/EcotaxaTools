@@ -85,7 +85,7 @@ compute_bv <- function(path, output, metadata) {
     data[pb] <- 1
   }
 
-  # Compute biovolumes and "conver"
+  # Compute biovolumes and "conver.uniqueID"
   data <- mutate(data,
                  major = object_major*pixelsize,
                  minor = object_minor*pixelsize,
@@ -101,8 +101,18 @@ compute_bv <- function(path, output, metadata) {
                  BV_riddled = (4/3)*pi*R3_riddled,
                  BV_plain = (4/3)*pi*R3_plain,
                  AB = 1,
-                 conver = sample_concentrated_sample_volume/
+                 conver.uniqueID = sample_concentrated_sample_volume/
                    (acq_imaged_volume*sample_total_volume*sample_dilution_factor))
+
+  # Compute "conver.sample"
+  vimgsample <- data %>% select(sample_id, unique_id, acq_imaged_volume) %>% distinct() %>%
+    group_by(sample_id) %>% summarize(sample_imaged_volume=sum(acq_imaged_volume, na.rm=T))
+
+  data <- merge(data, vimgsample, "sample_id", all.x=T)
+
+  data <- mutate(data,
+                 conver.sample = sample_concentrated_sample_volume/
+                   (sample_imaged_volume*sample_total_volume*sample_dilution_factor))
 
   # Biovolume class parameters (mm3)
   smin = 1e-12 # minimum size
