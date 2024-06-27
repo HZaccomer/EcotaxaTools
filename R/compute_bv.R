@@ -20,7 +20,7 @@ compute_bv <- function(path, output, metadata) {
   # Load
   data <- read_tsv(path, col_types = list(object_time=col_time(),
                                           object_annotation_time=col_time())) %>%
-    group_by(object_label) %>% mutate(ghost_id=1:n()) %>% ungroup %>%
+    group_by(object_label, acq_id) %>% mutate(ghost_id=1:n()) %>% ungroup %>%
     mutate(unique_id = paste(acq_id,sample_operator,ghost_id,
                              object_date,object_time,
                              object_lat,object_lon,sep="_"))
@@ -33,6 +33,7 @@ compute_bv <- function(path, output, metadata) {
       meta <- metadata[metadata$unique_id==i,]
       data[data$unique_id==i,] <- mutate(data[data$unique_id==i,],
                                          acq_id = meta$acq_id,
+                                         ghost_id = meta$ghost_id,
                                          object_date = meta$object_date,
                                          object_time = meta$object_time,
                                          object_lat = meta$object_lat,

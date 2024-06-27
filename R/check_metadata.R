@@ -18,7 +18,7 @@ check_metadata <- function(path, output) {
   meta_file <- function(x) {
     metadata <- read_tsv(x, col_types = list(object_time=col_time(),
                                             object_annotation_time=col_time())) %>%
-      group_by(object_label) %>% mutate(ghost_id=1:n()) %>% ungroup %>%
+      group_by(object_label, acq_id) %>% mutate(ghost_id=1:n()) %>% ungroup %>%
       mutate(unique_id = paste(acq_id,sample_operator,ghost_id,
                                object_date,object_time,
                                object_lat,object_lon,sep="_")) %>%
@@ -46,7 +46,7 @@ check_metadata <- function(path, output) {
              acq_imaged_volume,
              process_pixel,
              sample_dilution_factor) %>%
-      distinct()
+      distinct() %>% group_by(sample_id) %>% mutate(ghost_id=1:n()) %>% ungroup()
 
     return(metadata)
   }
