@@ -86,7 +86,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           theme_minimal())
 
   print(x %>% filter(n1=="living") %>%
-          ggplot(aes(x=reorder(sample_id, time, decreasing=T), y=BV, fill=Sub_type)) +
+          ggplot(aes(x=reorder(sample_id, time, decreasing=T), y=AB, fill=Sub_type)) +
           geom_bar(stat="identity") +
           scale_fill_manual(values = colorRampPalette(brewer.pal(8, "Set2"))(N)) +
           scale_y_continuous("AB") +
@@ -108,7 +108,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           theme_minimal())
 
   print(x %>% filter(n1=="not-living") %>%
-          ggplot(aes(x=reorder(sample_id, time, decreasing=T), y=BV, fill=Sub_type)) +
+          ggplot(aes(x=reorder(sample_id, time, decreasing=T), y=AB, fill=Sub_type)) +
           geom_bar(stat="identity") +
           scale_fill_manual(values = colorRampPalette(brewer.pal(8, "Set2"))(N)) +
           scale_y_continuous("AB") +
