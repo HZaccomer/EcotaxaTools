@@ -4,7 +4,7 @@ Title: EcoTaxa tools for PlanktoScope
 Version: 0.1.0
 Author: P. Kostyrka
 Maintainer: <pierre.kostyrka@imev-mer.fr>
-Description: This package can compute biovolumes from a ecotaxa tsv file and gives an overview of the data.
+Description: This package can compute biovolumes from an ecotaxa tsv file and gives an overview of the data.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
