@@ -12,7 +12,7 @@
 #' @examples
 #'
 # Function to compute biovolumes for one file
-compute_bv <- function(path, output, metadata) {
+compute_bv <- function(path, output, metadata=NULL) {
   options(dplyr.summarise.inform = FALSE)
 
   # add trophics levels
