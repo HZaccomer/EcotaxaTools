@@ -61,7 +61,7 @@ compute_bv <- function(path, output, metadata=NULL) {
 
   # Check metadata
   metadata <- select(data,
-                     acq_id,
+                     unique_id,
                      object_date,
                      object_time,
                      object_lat,
@@ -78,11 +78,13 @@ compute_bv <- function(path, output, metadata=NULL) {
                      sample_dilution_factor) %>% distinct()
 
   # Replace by 1 by default
-  if(sum(is.na(metadata))>0) {
-    pb <- colnames(metadata)[is.na(metadata)]
-    print(paste0("Warning ! [sample : ",unique(data$sample_id),"] These metadata do not have value. Default is 1 : ",pb))
-    metadata[is.na(metadata)] <- 1
-    data[pb] <- 1
+  for (i in unique(metadata$unique_id)){
+    if(sum(is.na(metadata[metadata$unique_id==i]))>0) {
+      pb <- colnames(metadata[metadata$unique_id==i])[is.na(metadata[metadata$unique_id==i])]
+      print(paste0("Warning ! [sample : ",unique(data$sample_id),"] These metadata do not have value. Default is 1 : ",pb))
+      metadata[is.na(metadata) & metadata$unique_id==i] <- 1
+      data[pb] <- 1
+    }
   }
 
   # Compute biovolumes and "conver.uniqueID"
