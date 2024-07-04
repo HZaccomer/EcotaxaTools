@@ -4,7 +4,7 @@
 \alias{compute_bv}
 \title{compute_bv}
 \usage{
-compute_bv(path, output, metadata)
+compute_bv(path, output, metadata = NULL)
 }
 \arguments{
 \item{path}{path to the directory containing all the tsv files}

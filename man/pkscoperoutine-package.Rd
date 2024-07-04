@@ -6,7 +6,7 @@
 \alias{pkscoperoutine-package}
 \title{pkscoperoutine: EcoTaxa tools for PlanktoScope}
 \description{
-This package can compute biovolumes from a ecotaxa tsv file and gives an overview of the data.
+This package can compute biovolumes from an ecotaxa tsv file and gives an overview of the data.
 }
 \seealso{
 Useful links:
