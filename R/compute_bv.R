@@ -23,7 +23,10 @@ compute_bv <- function(path, output, metadata=NULL) {
     group_by(object_label, acq_id) %>% mutate(ghost_id=1:n()) %>% ungroup %>%
     mutate(unique_id = paste(acq_id,sample_operator,ghost_id,
                              object_date,object_time,
-                             object_lat,object_lon,sep="_"))
+                             object_lat,object_lon,sep="_")) %>%
+    mutate(sample_total_volume = ifelse("sample_total_volume" %in% colnames(.), sample_total_volume, NA),
+           sample_concentrated_sample_volume = ifelse("sample_concentrated_sample_volume" %in% colnames(.), sample_concentrated_sample_volume, NA),
+           sample_dilution_factor = ifelse("sample_dilution_factor" %in% colnames(.), sample_dilution_factor, NA))
 
   id <- unique(data$sample_id)
 
