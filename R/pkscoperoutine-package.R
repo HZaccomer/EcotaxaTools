@@ -17,5 +17,6 @@
 #' @import vegan
 #' @import tidyr
 #' @import viridis
+#' @import easycsv
 ## usethis namespace: end
 NULL

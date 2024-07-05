@@ -18,13 +18,13 @@ routine_planktoscope_ecotaxa <- function() {
   start <- dlg_message("Please select the data directory. All the tsv files in this directory will be processed.", type="okcancel")$res
   if (start=="cancel") stop("Canceled.")
 
-  # if (Sys.info()["sysname"]=="Windows") {
-  #   mainpath <- utils::choose.dir()
-  #   path <- mainpath %>% list.files(".tsv", full.names = T)
-  # } else {
+  if (Sys.info()["sysname"]=="Windows") {
+    mainpath <- easycsv::choose_dir()
+    path <- mainpath %>% list.files(".tsv", full.names = T)
+  } else {
     mainpath <- tcltk::tk_choose.dir()
     path <- mainpath %>% list.files(".tsv", full.names = T)
-  # }
+  }
 
   # Create a new directory for created files
   if (!file.exists(file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %H.%M"))))) {
