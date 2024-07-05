@@ -3,9 +3,10 @@
 
 #' add.taxo
 #'
-#' Return a taxonomic table with different levels per column based on annotation hierarchy.
+#' Return a taxonomic table with different levels per column based on annotation hierarchy from EcoTaxa.
+#' The taxa are separated by the delim ">".
 #'
-#' @param object_hierarchy_vector Vector of object annotation hierarchy.
+#' @param object_hierarchy_vector Vector of object annotation hierarchy from EcoTaxa.
 #'
 #' @return Return a taxonomic table.
 #' @export

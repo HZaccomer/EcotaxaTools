@@ -16,8 +16,8 @@ NBSS.plot(x, taxon, bv.type, samples)
 \item{samples}{samples you want to plot.}
 }
 \value{
-A NBSS plot
+A NBSS ggplot
 }
 \description{
-NBSS plot.
+NBSS plot function.
 }

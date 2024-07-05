@@ -21,5 +21,12 @@ graph.project(x, metadata, taxo, bv.type = "elli", living.only = T)
 A set of graphics to resume the project.
 }
 \description{
-Return ggplot graphics to resume the project.
+Print ggplot graphics to resume the project (comparison of all samples).
+Return :
+1. Text resume of all the project
+2. live/not-live/temporary BV and AB graph
+3. Not-Living and Living (based on the OTU database) BV and AB graph
+4. NBSS (color and curve)
+5. Relative NBSS
+6. Shannon index
 }

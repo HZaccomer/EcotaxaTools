@@ -21,5 +21,11 @@ graph.sample(x, metadata, taxo, bv.type = "elli", living.only = T)
 A set of graphics to resume the sample.
 }
 \description{
-Return ggplot graphics to resume the sample.
+Return ggplot graphics to resume one sample.
+1. Text resume
+2. Relative AB and BV
+3. Trophic pyramid
+4. BSS and NBSS
+5. Relative NBSS
+6. Map
 }

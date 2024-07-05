@@ -11,4 +11,7 @@ Biovolumes, dataframes and resume tables, figures to check the data.
 }
 \description{
 A routine to compute biovolumes and save updated csv files. Save also table resume for each taxonomic group and figures to check the data.
+1. Choose a directory and create a new one inside to save results.
+2. Use function check_metadata to allow data edit.
+3. Ask
 }

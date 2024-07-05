@@ -3,9 +3,10 @@
 #' add.zoo
 #'
 #' Add trophic levels and OTU from a database constructed within the package, or external.
-#' Type = OTU main
-#' Sub_Type = OTU sub type
-#' Value = Trophic level
+#' object_annotation_hierarchy2 = object annotation hierarchy from ecotaxa with corrected delim >.
+#' Type = OTU main type "Living, non-living, etc."
+#' Sub_Type = OTU sub type "Diatoms, Copepods, etc."
+#' Value = Trophic level "Predators = 3 ... Autotroph = 1, NA = 3.5 and none = -1"
 #'
 #' @param taxo OTU table generated with "add_taxo" containing trophic levels and main OTU groups.
 #' @param output file output to save the new zoo table if edited.

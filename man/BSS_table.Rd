@@ -7,7 +7,7 @@
 BSS_table(x, NBSS = F)
 }
 \arguments{
-\item{x}{tsv file of a sample}
+\item{x}{tsv file of a sample from EcoTaxa}
 
 \item{NBSS}{Should it return NBSS or BSS ? False by default, return a BSS.}
 }
@@ -15,5 +15,5 @@ BSS_table(x, NBSS = F)
 Table of biovolume and abundance.
 }
 \description{
-Return a table of biovolumes by size class for all types of biovolumes and abundance.
+Return a table of biovolumes by size class and annotation for all types of biovolumes and abundance (elli, plain and riddled).
 }

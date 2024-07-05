@@ -1,6 +1,7 @@
 #' check_metadata
 #'
-#' Check the metadata of all samples in a project.
+#' Check the metadata of all samples in a project and allows to edit the metadata in a shiny app.
+#' The metadata (original and edited) are saved in the output directory.
 #'
 #' @param path path to the directory containing all the tsv files
 #' @param output path to the output directory where the results are saved

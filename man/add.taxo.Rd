@@ -7,11 +7,12 @@
 add.taxo(object_hierarchy_vector)
 }
 \arguments{
-\item{object_hierarchy_vector}{Vector of object annotation hierarchy.}
+\item{object_hierarchy_vector}{Vector of object annotation hierarchy from EcoTaxa.}
 }
 \value{
 Return a taxonomic table.
 }
 \description{
-Return a taxonomic table with different levels per column based on annotation hierarchy.
+Return a taxonomic table with different levels per column based on annotation hierarchy from EcoTaxa.
+The taxa are separated by the delim ">".
 }

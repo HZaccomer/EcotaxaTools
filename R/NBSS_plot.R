@@ -1,14 +1,14 @@
 
 #' NBSS.plot
 #'
-#' NBSS plot.
+#' NBSS plot function.
 #'
 #' @param x bss data.table produced by "BSS_table"
 #' @param taxon taxon you want to plot. Choose "total" if you want to see the global NBSS.
 #' @param bv.type elli, plain or riddled biovolume. default is "elli"
 #' @param samples samples you want to plot.
 #'
-#' @return A NBSS plot
+#' @return A NBSS ggplot
 #' @export
 #'
 #' @examples

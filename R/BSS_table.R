@@ -1,8 +1,8 @@
 #' BSS_table
 #'
-#' Return a table of biovolumes by size class for all types of biovolumes and abundance.
+#' Return a table of biovolumes by size class and annotation for all types of biovolumes and abundance (elli, plain and riddled).
 #'
-#' @param x tsv file of a sample
+#' @param x tsv file of a sample from EcoTaxa
 #' @param NBSS Should it return NBSS or BSS ? False by default, return a BSS.
 #'
 #' @return Table of biovolume and abundance.

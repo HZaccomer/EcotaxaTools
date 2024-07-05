@@ -15,5 +15,6 @@ check_metadata(path, output)
 return a metadata resume of the directory and save the results
 }
 \description{
-Check the metadata of all samples in a project.
+Check the metadata of all samples in a project and allows to edit the metadata in a shiny app.
+The metadata (original and edited) are saved in the output directory.
 }

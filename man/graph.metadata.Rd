@@ -14,4 +14,5 @@ A set of graphics to resume the project metadata.
 }
 \description{
 A set of graphics to resume the project metadata.
+Return a map of the samples, date and time, and metadata comparison between all samples.
 }

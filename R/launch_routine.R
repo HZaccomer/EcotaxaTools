@@ -2,6 +2,9 @@
 #' routine_planktoscope_ecotaxa
 #'
 #' A routine to compute biovolumes and save updated csv files. Save also table resume for each taxonomic group and figures to check the data.
+#' 1. Choose a directory and create a new one inside to save results.
+#' 2. Use function check_metadata to allow data edit.
+#' 3. Ask
 #'
 #' @return Biovolumes, dataframes and resume tables, figures to check the data.
 #' @export
@@ -15,7 +18,7 @@ routine_planktoscope_ecotaxa <- function() {
   start <- dlg_message("Please select the data directory. All the tsv files in this directory will be processed.", type="okcancel")$res
   if (start=="cancel") stop("Canceled.")
 
-  # if (Sys.info()["sysname"]!="Windows") {
+  # if (Sys.info()["sysname"]=="Windows") {
   #   mainpath <- utils::choose.dir()
   #   path <- mainpath %>% list.files(".tsv", full.names = T)
   # } else {
