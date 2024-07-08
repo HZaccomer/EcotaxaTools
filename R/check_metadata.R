@@ -30,6 +30,7 @@ check_metadata <- function(path, output) {
       mutate(sample_total_volume = ifelse("sample_total_volume" %in% colnames(.), sample_total_volume, NA),
              sample_concentrated_sample_volume = ifelse("sample_concentrated_sample_volume" %in% colnames(.), sample_concentrated_sample_volume, NA),
              sample_dilution_factor = ifelse("sample_dilution_factor" %in% colnames(.), sample_dilution_factor, NA)) %>%
+      mutate(sample_dilution_factor = as.numeric(gsub(",", ".",sample_dilution_factor))) %>%
       select(sample_id,
              acq_id,
              unique_id,
