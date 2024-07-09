@@ -22,9 +22,8 @@
 #' @examples
 
 graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
-  # ameioration ==> memes couleurs pour memes taxons
-  # ameioration ==> toujours avoir un niveau 6 ou utiliser la table de zoe
-
+  # why not using stat_summary if you have log transformed graph ?
+  # because it will do the sum AFTER the transformation !
 
   # Select type of biovolume
   x <- filter(x, type==bv.type)
@@ -85,10 +84,10 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     theme(plot.title = element_text(hjust = 0.5))
 
   # NBSS
-  p4 <- x %>%
-    ggplot(aes(x=bv_to_esdum(max), y=BV/norm)) +
-    stat_summary(fun = sum, na.rm=T, geom="point", size=3) +
-    stat_summary(fun = sum, na.rm=T, geom="line", size=1) +
+  p4 <- x %>% group_by(max) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
+    ggplot(aes(x=bv_to_esdum(max), y=BV)) +
+    geom_point(size=3) +
+    geom_line(size=1) +
     scale_x_log10("Size (\u00b5m)") +
     scale_y_log10("NBSS (mm\u00b3.mm\u207B\u00b3.m\u207B\u00b3)", labels=trans_format('log10',math_format(10^.x))) +
     theme_minimal() +
@@ -96,10 +95,10 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     theme(plot.title = element_text(hjust = 0.5))
 
   # BSS
-  p5 <- x %>%
+  p5 <- x %>% group_by(max) %>% summarise(BV=sum(BV, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=BV)) +
-    stat_summary(fun = sum, na.rm=T, geom="point", size=3) +
-    stat_summary(fun = sum, na.rm=T, geom="line", size=1) +
+    geom_point(size=3) +
+    geom_line(size=1) +
     scale_x_log10("Size (\u00b5m)") +
     scale_y_log10("BSS (mm\u00b3.m\u207B\u00b3)", labels=trans_format('log10',math_format(10^.x))) +
     theme_minimal() +

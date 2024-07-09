@@ -146,9 +146,9 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
                              trans="log10", option="turbo") +
           theme_minimal())
 
-  print(x %>%
-          ggplot(aes(x=max, y=BV/norm)) +
-          stat_summary(fun = sum, na.rm=T, geom="line") +
+  print(x %>% group_by(max) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
+          ggplot(aes(x=max, y=BV)) +
+          geom_line() +
           facet_wrap(~reorder(sample_id, time), strip.position="top") +
           scale_x_log10("Size (um)", labels=trans_format('log10',math_format(10^.x))) +
           scale_y_log10("NBSS (mm3.mm-3.m-3)", labels=trans_format('log10',math_format(10^.x))) +
