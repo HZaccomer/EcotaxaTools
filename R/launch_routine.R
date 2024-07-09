@@ -39,7 +39,7 @@ routine_planktoscope_ecotaxa <- function() {
   check_metadata(path, output)
 
   # Compute biovolumes and resume to BSS (warning : not normalized by size class)
-  yesno <- dlg_message("Do you want to select a metadata table ? If not the original metadata will be used.", type="yesno")$res
+  yesno <- dlg_message("IMPORTANT: Do you want to select the edited metadata or another metadata table ? If not the original metadata will be used.", type="yesno")$res
 
   if(yesno=="yes") {
     metadata <- file.choose() %>% read_csv2()
