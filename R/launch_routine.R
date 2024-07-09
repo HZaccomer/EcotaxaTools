@@ -91,6 +91,7 @@ routine_planktoscope_ecotaxa <- function() {
   if(!exists("metadata")){
     metadata <- read_csv2(file.path(output, "metadata", "original_metadata.csv"))
   }
+  metadata[is.na(metadata)] <- 1
 
   # Saving tables
   write_csv2(metadata, file.path(path.resume, "metadata_used.csv"))

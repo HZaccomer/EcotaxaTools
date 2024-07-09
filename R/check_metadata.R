@@ -57,11 +57,13 @@ check_metadata <- function(path, output) {
   }
 
   metadata <- do.call("rbind", lapply(path, meta_file))
-  metadata[is.na(metadata)] <- 1
   metadata <- arrange(metadata, object_date, object_time)
+
+  # Save original
   write_csv2(metadata, file.path(output,"metadata","original_metadata.csv"))
   print("Original metadata saved.")
 
+  # DATA EDIT
   check <- metadata %>% group_by(sample_id) %>% summarize(nb=n())
   check <- max(check$nb, na.rm=T)
   if (check>1){
@@ -69,7 +71,7 @@ check_metadata <- function(path, output) {
   }
 
   time <- format(Sys.time(), "%d-%m-%Y_%H%M")
-  dlg_message("You can now edit metadata (click on SYNCHRONIZE and DONE button to update edition). The original .tsv files will not be edited. NA are replaced by 1. Do not change the unique_id.", type="ok")
+  dlg_message("You can now edit metadata (click on SYNCHRONIZE and DONE button to update edition). The original .tsv files will not be edited. NA will be replaced by 1. Do not change the unique_id.", type="ok")
 
   metadata$object_date <- as.character(metadata$object_date)
   metadata$object_time <- as.character(metadata$object_time)
@@ -78,6 +80,8 @@ check_metadata <- function(path, output) {
                                           paste0("edited_metadata_",
                                                  time,
                                                  ".csv")), viewer="pane")
+
+
   print("Edited metadata saved.")
   return(metadata)
 }
