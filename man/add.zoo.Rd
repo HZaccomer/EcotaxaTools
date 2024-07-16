@@ -21,3 +21,6 @@ Type = OTU main type "Living, non-living, etc."
 Sub_Type = OTU sub type "Diatoms, Copepods, etc."
 Value = Trophic level "Predators = 3 ... Autotroph = 1, NA = 3.5 and none = -1"
 }
+\examples{
+add.zoo(taxo=table from add.taxo, output=where to save the table)
+}

@@ -7,11 +7,14 @@
 bv_to_esdum(x)
 }
 \arguments{
-\item{x}{Biovolume}
+\item{x}{Biovolume in mm3}
 }
 \value{
 ESD in micron
 }
 \description{
 Compute ESD in micron from Biovolume in mm3
+}
+\examples{
+bv_to_esdum(x=Biovolume)
 }

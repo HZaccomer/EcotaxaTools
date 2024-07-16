@@ -9,7 +9,7 @@
 #' @return return a metadata resume of the directory and save the results
 #' @export
 #'
-#' @examples
+#' @examples check_metadata(path=project.directory, output=where to save results)
 check_metadata <- function(path, output) {
 
   if (!file.exists(file.path(output,"metadata"))) {

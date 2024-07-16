@@ -8,7 +8,7 @@
 #' @return Table of biovolume and abundance.
 #' @export
 #'
-#' @examples
+#' @examples BSS_table(x=tsv.file, NBSS=FALSE)
 
 BSS_table <- function(x, NBSS=F) {
 

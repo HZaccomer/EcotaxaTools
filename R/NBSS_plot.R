@@ -11,8 +11,8 @@
 #' @return A NBSS ggplot
 #' @export
 #'
-#' @examples
-NBSS.plot <- function(x, taxon, bv.type, samples){
+#' @examples NBSS.plot(x=bss table of project, taxon="all", bv.type="elli", samples="all")
+NBSS.plot <- function(x, taxon, bv.type, samples="all"){
 
   # Define min/max size
   x$max <- bv_to_esdum(x$max)
@@ -23,6 +23,7 @@ NBSS.plot <- function(x, taxon, bv.type, samples){
   N <- length(taxon)
   myColors <- colorRampPalette(brewer.pal(8, "Set2"))(N)
 
+  if(samples=="all") samples <- unique(x$sample_id)
 
   if(taxon=="total") {
     g <- x %>% filter(type==bv.type, sample_id %in% samples) %>% group_by(sample_id, max, norm) %>%

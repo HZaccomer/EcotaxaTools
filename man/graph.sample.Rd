@@ -29,3 +29,6 @@ Return ggplot graphics to resume one sample.
 5. Relative NBSS
 6. Map
 }
+\examples{
+graph.sample(x=bss of one sample, metadata, zoo.csv, bv.type="elli", living.only=TRUE)
+}

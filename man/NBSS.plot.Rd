@@ -4,7 +4,7 @@
 \alias{NBSS.plot}
 \title{NBSS.plot}
 \usage{
-NBSS.plot(x, taxon, bv.type, samples)
+NBSS.plot(x, taxon, bv.type, samples = "all")
 }
 \arguments{
 \item{x}{bss data.table produced by "BSS_table"}
@@ -20,4 +20,7 @@ A NBSS ggplot
 }
 \description{
 NBSS plot function.
+}
+\examples{
+NBSS.plot(x=bss table of project, taxon="all", bv.type="elli", samples="all")
 }

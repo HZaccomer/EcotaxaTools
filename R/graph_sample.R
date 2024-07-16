@@ -19,7 +19,7 @@
 #' @return A set of graphics to resume the sample.
 #' @export
 #'
-#' @examples
+#' @examples graph.sample(x=bss of one sample, metadata, zoo.csv, bv.type="elli", living.only=TRUE)
 
 graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   # why not using stat_summary if you have log transformed graph ?

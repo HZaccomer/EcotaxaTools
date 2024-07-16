@@ -14,7 +14,7 @@
 #' @return A taxonomic table with also trophic levels.
 #' @export
 #'
-#' @examples
+#' @examples add.zoo(taxo=table from add.taxo, output=where to save the table)
 add.zoo <- function(taxo, output){
   # load the original database of OTU and make it "clean"
   zo <- zooregroup_zooscan

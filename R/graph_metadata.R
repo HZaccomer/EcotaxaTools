@@ -8,7 +8,7 @@
 #' @return A set of graphics to resume the project metadata.
 #' @export
 #'
-#' @examples
+#' @examples graph.metadata(metadata.file from check_metadata)
 
 # ordonner par datetime
 

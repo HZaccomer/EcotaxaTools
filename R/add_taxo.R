@@ -11,7 +11,7 @@
 #' @return Return a taxonomic table.
 #' @export
 #'
-#' @examples
+#' @examples add.taxo(object_hierarchy_vector)
 add.taxo <- function(object_hierarchy_vector){
 
   # rep.last is a function that allow to copy the last taxonomic level available to the lower levels if they are not provided.

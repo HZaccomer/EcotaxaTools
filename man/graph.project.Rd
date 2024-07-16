@@ -15,7 +15,7 @@ graph.project(x, metadata, taxo, bv.type = "elli", living.only = T)
 
 \item{bv.type}{elli, plain or riddled biovolume. default is "elli"}
 
-\item{living.only}{TRUE by default}
+\item{living.only}{TRUE by default, for NBSS plots}
 }
 \value{
 A set of graphics to resume the project.
@@ -29,4 +29,7 @@ Return :
 4. NBSS (color and curve)
 5. Relative NBSS
 6. Shannon index
+}
+\examples{
+graph.project(x=bss table of all the project, metadata, taxo=zoo.csv, bv.type="elli", living.only=TRUE)
 }

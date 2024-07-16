@@ -16,3 +16,6 @@ A set of graphics to resume the project metadata.
 A set of graphics to resume the project metadata.
 Return a map of the samples, date and time, and metadata comparison between all samples.
 }
+\examples{
+graph.metadata(metadata.file from check_metadata)
+}

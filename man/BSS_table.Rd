@@ -17,3 +17,6 @@ Table of biovolume and abundance.
 \description{
 Return a table of biovolumes by size class and annotation for all types of biovolumes and abundance (elli, plain and riddled).
 }
+\examples{
+BSS_table(x=tsv.file, NBSS=FALSE)
+}

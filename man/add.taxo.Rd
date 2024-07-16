@@ -16,3 +16,6 @@ Return a taxonomic table.
 Return a taxonomic table with different levels per column based on annotation hierarchy from EcoTaxa.
 The taxa are separated by the delim ">".
 }
+\examples{
+add.taxo(object_hierarchy_vector)
+}
