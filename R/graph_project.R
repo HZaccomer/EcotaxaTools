@@ -146,7 +146,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
                              trans="log10", option="turbo") +
           theme_minimal())
 
-  print(x %>% group_by(sample_id, max, class) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
+  print(x %>% group_by(sample_id, max, time) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
           ggplot(aes(x=max, y=BV)) +
           geom_line() +
           facet_wrap(~reorder(sample_id, time), strip.position="top") +
