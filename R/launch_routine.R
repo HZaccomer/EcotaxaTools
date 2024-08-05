@@ -77,7 +77,7 @@ routine_planktoscope_ecotaxa <- function() {
   }
 
   # Resume table for Abundance (same for elli, plain, etc.)
-  t2 <- res %>% filter(type=="plain") %>% select(-type, -BV) %>%
+  t <- res %>% filter(type=="plain") %>% select(-type, -BV) %>%
     pivot_wider(names_from = sample_id,
                 values_from = AB)
   t$Total <- rowSums(t[-1], na.rm=T) # sum by sp
