@@ -154,7 +154,7 @@ compute_bv <- function(path, output, metadata=NULL) {
   data <- cbind(data, classes)
 
   # Save file with the new columns
-  write_csv2(data, file.path(output,id))
+  write_csv2(data, paste0(file.path(output,id),".csv"))
 
   print(paste0("done : ",unique(data$sample_id)))
 
