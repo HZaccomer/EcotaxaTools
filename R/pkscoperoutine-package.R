@@ -18,5 +18,7 @@
 #' @import tidyr
 #' @import viridis
 #' @import easycsv
+#' @import htmltools
+#' @import shiny
 ## usethis namespace: end
 NULL
