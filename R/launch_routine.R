@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples routine_planktoscope_ecotaxa()
-routine_planktoscope_ecotaxa <- function() {
+planktoscope_routine_ecotaxa <- function() {
   # Definition de l'instrument
   instru <- dlg_list(c("PlanktoScope"), title="Instrument")$res
 
