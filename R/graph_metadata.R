@@ -35,7 +35,8 @@ graph.metadata <- function(metadata) {
 
   print(ggplot() +
           geom_sf(data = worldmap, color=NA, fill="gray54") +
-          geom_sf(data = meta.point, size=3, aes(color=time)) +
+          geom_sf(data = meta.point, size=0.8, aes(color=time)) +
+          ggtitle("Sampling map") +
           theme_bw())
 
   sf_use_s2(TRUE)
@@ -48,8 +49,9 @@ graph.metadata <- function(metadata) {
           ylab(NULL) +
           scale_y_discrete() +
           theme_minimal() +
+          ggtitle("Number of acquisition per sample") +
           theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-                legend.position = "top"))
+                legend.position = "right"))
 
   # 3. METADATA
   metadata.long <- pivot_longer(metadata, 10:18) %>% arrange(time)
@@ -71,8 +73,9 @@ graph.metadata <- function(metadata) {
             xlab(NULL) +
             ylab(NULL) +
             theme_bw() +
-            theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
-                  legend.position = "top") +
+            ggtitle("Metadata values per acquisition and per sample") +
+            theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size = 8),
+                  legend.position = "right") +
             facet_wrap(~name, scales="free_y", ncol=1))
     a = b + 1 # conditions
     if(a>nb) a = nb
