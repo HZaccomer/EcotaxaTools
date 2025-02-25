@@ -11,7 +11,7 @@
 #' @return Biovolumes, dataframes and resume tables, figures to check the data.
 #' @export
 #'
-#' @examples routine_planktoscope_ecotaxa()
+#' @examples planktoscope_routine_ecotaxa()
 planktoscope_routine_ecotaxa <- function() {
   # Definition de l'instrument
   instru <- dlg_list(c("PlanktoScope"), title="Instrument")$res
