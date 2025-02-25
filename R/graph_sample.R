@@ -22,8 +22,7 @@
 #' @examples graph.sample(x=bss of one sample, metadata, zoo.csv, bv.type="elli", living.only=TRUE)
 
 graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
-  # why not using stat_summary if you have log transformed graph ?
-  # because it will do the sum AFTER the transformation !
+  # why not using stat_summary if you have log transformed graph ? because it will do the sum AFTER the transformation !
 
   # Select type of biovolume
   x <- filter(x, type==bv.type)
@@ -76,7 +75,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   p3 <- x %>% group_by(Sub_type) %>%
     summarise(per=sum(BV, na.rm=T)/tot*100) %>%
     ggplot(aes(x="", y=per, fill=Sub_type)) +
-    geom_bar(stat="identity", width=1, color="white") +
+    geom_bar(stat="identity", width=0.25, color="white") +
     scale_fill_manual(values = myColors) +
     coord_polar("y", start=0) +
     ggtitle("Relative biovolume") +
@@ -114,6 +113,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     scale_fill_manual(values = myColors) +
     ylab("Biovolume (%)") +
     scale_x_log10("Size (\u00b5m)") +
+    ggtitle("BV composition by sub_type") +
     theme_minimal()
 
   # Trophic pyramid p7
@@ -131,6 +131,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     coord_flip() +
     xlab(NULL) +
     ylab("Biovolume (mm\u00b3.m\u207B\u00b3)") +
+    ggtitle("Trophic level biovolume") +
     theme_minimal()
 
   # Map
@@ -154,15 +155,15 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
 
   p8 <- ggplot() +
     geom_sf(data = worldmap, color=NA, fill="gray54") +
-    geom_sf(data = meta.point, size=3) +
+    geom_sf(data = meta.point, size=0.8, color="red") +
     theme_bw()
 
-  g <- ggarrange(p1, p2, p3, p7, p5, p4, p6, p8,
+  ptot <- ggarrange(p1, p2, p3, p7, p5, p4, p6, p8,
                  common.legend = T, legend="bottom",
                  ncol=4, nrow=2) %>%
     annotate_figure(top=unique(x$sample_id), fig.lab.face="bold")
 
   # sf_use_s2(TRUE)
 
-  return(g)
+  return(ptot)
 }
