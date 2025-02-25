@@ -48,9 +48,9 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     "\n\n\nLIVING ONLY:\n",
     "\nNumber of samples:\n",
     length(unique(x$sample_id[x$n1=="living"])),
-    "\nnMean absolute abundance (ind.m-3):\n",
+    "\nMean absolute abundance (ind.m-3):\n",
     round(mean(x$AB[x$n1=="living"], na.rm=T),4)," ~",round(sd(x$AB[x$n1=="living"], na.rm=T),4),
-    "\nnMean absolute biovolume (mm3.mm-3):\n",
+    "\nMean absolute biovolume (mm3.mm-3):\n",
     round(mean(x$BV[x$n1=="living"], na.rm=T),4)," ~",round(sd(x$BV[x$n1=="living"], na.rm=T),4),
     "\nShannon Index:\n",
     round(div,4))
@@ -61,14 +61,14 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
 
   # BIOVOLUME TOTAL/SAMPLE
   # ----------------------------------------------------------------------------
-  # live/not-live/temporary
+  # living/not-living/temporary
   print(ggplot(x, aes(x=reorder(sample_id, time, decreasing=T), y=BV, fill=n1)) +
           geom_bar(stat="identity") +
           scale_fill_brewer("paired") +
           scale_y_continuous("BV (mm3.m-3)") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("All") +
+          ggtitle("Biovolume") +
           theme_minimal())
 
   print(ggplot(x, aes(x=reorder(sample_id, time, decreasing=T), y=AB, fill=n1)) +
@@ -77,10 +77,10 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("AB") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("All") +
+          ggtitle("Abundance") +
           theme_minimal())
 
-  # live only
+  # living only
   N <- length(unique(x$Sub_type[x$n1=="living"]))
   print(x %>% filter(n1=="living") %>%
           ggplot(aes(x=reorder(sample_id, time, decreasing=T), y=BV, fill=Sub_type)) +
@@ -89,7 +89,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("BV (mm3.m-3)") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("Living") +
+          ggtitle("Biovolume of the living") +
           theme_minimal())
 
   print(x %>% filter(n1=="living") %>%
@@ -99,10 +99,10 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("AB") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("Living") +
+          ggtitle("Abundance of the living") +
           theme_minimal())
 
-  # not live only
+  # not living only
   N <- length(unique(x$Sub_type[x$n1=="not-living"]))
   print(x %>% filter(n1=="not-living") %>%
           ggplot(aes(x=reorder(sample_id, time, decreasing=T), y=BV, fill=Sub_type)) +
@@ -111,7 +111,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("BV (mm3.m-3)") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("Not-living") +
+          ggtitle("Biovolume of the not-living") +
           theme_minimal())
 
   print(x %>% filter(n1=="not-living") %>%
@@ -121,18 +121,10 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("AB") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("Not-living") +
+          ggtitle("Abundance of the not-living") +
           theme_minimal())
 
   # 4. NBSS on living
-  # separer par pages !!
-  # proposer de faire les graphiques par sample plus tot dans le script
-  # ajouter date et time au resume nbss
-  # ameliorer le resume des metadata
-  # faire deja une 1ere version du script
-  # ce qui est specifique a l'intercalib, il ne faut pas le mettre : WB et pompe (car en temps normal ne change pas)
-  # idee de graph: chgmt couleur dans le temps ou en fonction nbss ou du sample, avec peut etre les vrais couleurs au lieu de chiffres
-  # rajouter un calcul de div dans les metadata ou le resume
   if(living.only==T) x <- x %>% filter(n1=="living")
 
   print(x %>%
@@ -144,6 +136,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_fill_viridis("NBSS (mm3.mm-3.m-3)",
                              labels=trans_format('log10',math_format(10^.x)),
                              trans="log10", option="turbo") +
+          ggtitle("NBSS on the living") +
           theme_minimal())
 
   print(x %>% group_by(sample_id, max, time) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
@@ -152,11 +145,12 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           facet_wrap(~reorder(sample_id, time), strip.position="top") +
           scale_x_log10("Size (um)", labels=trans_format('log10',math_format(10^.x))) +
           scale_y_log10("NBSS (mm3.mm-3.m-3)", labels=trans_format('log10',math_format(10^.x))) +
+          ggtitle("NBSS on the living") +
           theme_minimal())
 
 
 
-  # bss relatif
+  # Relative BSS
   N <- length(unique(x$Sub_type))
   print(x %>%
           group_by(sample_id, class) %>% mutate(rel = BV/sum(BV, na.rm=T)*100) %>%
@@ -166,6 +160,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_fill_manual(values = colorRampPalette(brewer.pal(8, "Set2"))(N)) +
           scale_x_log10("Size (um)", labels=trans_format('log10',math_format(10^.x))) +
           facet_wrap(~sample_id, strip.position="top") +
+          ggtitle("Relative BSS of the living") +
           theme_minimal())
 
   # diversity
@@ -175,6 +170,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           ggplot(aes(y=sample_id, x=Shannon)) +
           geom_col() +
           ylab(NULL) +
+          ggtitle("Diersity") +
           theme_minimal())
 
   # trophic levels
@@ -190,6 +186,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     labs(fill="Trophic level") +
     xlab(NULL) +
     ylab("Biovolume (mm3.m-3)") +
+    ggtitle("Trophic level biovolume") +
     theme_minimal()
 
 }
