@@ -6,7 +6,6 @@
 #' @import ggplot2
 #' @import DataEditR
 #' @import readr
-#' @import ggplot2
 #' @import ggpubr
 #' @import RColorBrewer
 #' @import rnaturalearth
