@@ -33,10 +33,10 @@ if (rstudioapi::isAvailable()) {
 }
 
   # Create a new directory for created files
-  if (!file.exists(file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %H.%M"))))) {
-    dir.create(file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %H.%M"))))
+  if (!file.exists(file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %Hh%M"))))) {
+    dir.create(file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %Hh%M"))))
   }
-  output <- file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %H.%M")))
+  output <- file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %Hh%M")))
 
 
   # COMPUTE DATA
