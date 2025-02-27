@@ -19,5 +19,8 @@
 #' @import easycsv
 #' @import htmltools
 #' @import shiny
+#' @import FactoMineR
+#' @import ggrepel
+#' @import factoextra
 ## usethis namespace: end
 NULL
