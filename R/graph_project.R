@@ -170,7 +170,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           ggplot(aes(y=sample_id, x=Shannon)) +
           geom_col() +
           ylab(NULL) +
-          ggtitle("Diersity") +
+          ggtitle("Diversity") +
           theme_minimal())
 
   # trophic levels
