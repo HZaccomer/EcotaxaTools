@@ -20,30 +20,21 @@ planktoscope_routine_ecotaxa <- function() {
   start <- dlg_message("Please select the data directory. All the tsv files in this directory will be processed.", type="okcancel")$res
   if (start=="cancel") stop("Canceled.")
 
-path <- NULL     # Initialize path outside the if/else blocks
-
-  if (rstudioapi::isAvailable()) {
-    mainpath <- rstudioapi::selectDirectory()
-    if (!is.null(mainpath)) {
-      path <- list.files(mainpath, pattern = "\\.tsv$", full.names = TRUE)
-    }
-
+if (rstudioapi::isAvailable()) {
+  mainpath <- rstudioapi::selectDirectory()
+} else {
+  if (Sys.info()["sysname"] == "Windows") {
+    mainpath <- svDialogs::dlg_dir()
   } else {
-    if (Sys.info()["sysname"] == "Windows") {
-      mainpath <- svDialogs::dlg_dir()
-      if (!is.null(mainpath)) {
-        path <- list.files(mainpath, pattern = "\\.tsv$", full.names = TRUE)
-      }
-
-    } else {
-      mainpath <- svDialogs::dlg_dir_choose()
-      if (!is.null(mainpath)) {
-        path <- list.files(mainpath, pattern = "\\.tsv$", full.names = TRUE)
-      }
-
-    }
+    mainpath <- svDialogs::dlg_dir_choose()
   }
+}
 
+if (!is.null(mainpath) && mainpath != "") {
+  path <- list.files(mainpath, pattern = "\\.tsv$", full.names = TRUE) 
+} else {
+  message("No valid directory selected.")
+}
 
   # Create a new directory for created files
   if (!file.exists(file.path(mainpath, paste0("new_",format(Sys.time(), "%d-%b-%Y %Hh%M"))))) {
