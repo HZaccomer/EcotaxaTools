@@ -68,7 +68,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("BV (mm3.m-3)") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("Biovolume") +
+          ggtitle("Total biovolume") +
           theme_minimal())
 
   print(ggplot(x, aes(x=reorder(sample_id, time, decreasing=T), y=AB, fill=n1)) +
@@ -77,7 +77,7 @@ graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
           scale_y_continuous("AB") +
           coord_flip() +
           xlab(NULL) +
-          ggtitle("Abundance") +
+          ggtitle("Total abundance") +
           theme_minimal())
 
   # living only
