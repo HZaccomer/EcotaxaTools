@@ -37,8 +37,7 @@ graph.metadata <- function(metadata) {
           geom_sf(data = worldmap, color=NA, fill="gray54") +
           geom_sf(data = meta.point, size=1, aes(color=time)) +
           ggtitle("Sampling map") +
-          theme_bw() + 
-          scale_color_gradient(low = "blue", high = "red"))
+          theme_bw())
 
   sf_use_s2(TRUE)
 
