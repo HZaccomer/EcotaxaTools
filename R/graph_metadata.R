@@ -38,7 +38,7 @@ graph.metadata <- function(metadata) {
           geom_sf(data = meta.point, size=1, aes(color=time)) +
           ggtitle("Sampling map") +
           theme_bw()) + 
-          paletteer::scale_color_paletteer_c("ggprism::the_blues")
+          scale_color_gradient(low = "blue", high = "red"))
 
   sf_use_s2(TRUE)
 
