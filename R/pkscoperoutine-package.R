@@ -22,6 +22,5 @@
 #' @import FactoMineR
 #' @import ggrepel
 #' @import factoextra
-#' @import paletteer
 ## usethis namespace: end
 NULL
