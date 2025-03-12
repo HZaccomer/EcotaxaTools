@@ -35,9 +35,10 @@ graph.metadata <- function(metadata) {
 
   print(ggplot() +
           geom_sf(data = worldmap, color=NA, fill="gray54") +
-          geom_sf(data = meta.point, size=0.8, aes(color=time)) +
+          geom_sf(data = meta.point, size=1, aes(color=time)) +
           ggtitle("Sampling map") +
-          theme_bw())
+          theme_bw()) + 
+          paletteer::scale_color_paletteer_d("ggprism::the_blues")
 
   sf_use_s2(TRUE)
 
