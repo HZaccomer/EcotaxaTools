@@ -1,4 +1,3 @@
-
 #' NBSS.plot
 #'
 #' NBSS plot function.
