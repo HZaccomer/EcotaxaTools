@@ -1,6 +1,6 @@
-Package: planktoscoperoutine
+Package: EcotaxaTools
 Type: Package
-Title: EcoTaxa tools for PlanktoScope
+Title: EcoTaxa tools for quantitative imagery instruments
 Version: 0.1.0
 Author: P. Kostyrka
 Maintainer: <pierre.kostyrka@imev-mer.fr>
