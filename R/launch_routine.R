@@ -1,5 +1,5 @@
 
-#' routine_planktoscope_ecotaxa
+#' EcotaxaTools
 #'
 #' A routine to compute biovolumes and save updated csv files. Save also table resume for each taxonomic group and figures to check the data.
 #' 1. Choose a directory and create a new one inside to save results.
@@ -11,8 +11,8 @@
 #' @return Biovolumes, dataframes and resume tables, figures to check the data.
 #' @export
 #'
-#' @examples planktoscope_routine_ecotaxa()
-planktoscope_routine_ecotaxa <- function() {
+#' @examples EcotaxaTools()
+EcotaxaTools <- function() {
   # Definition de l'instrument
   instru <- dlg_list(c("PlanktoScope", "FlowCam","ZooScan","IFCB", "UVP"), title="Instrument")$res
 
