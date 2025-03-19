@@ -95,7 +95,7 @@ if (!is.null(mainpath) && mainpath != "") {
   write_csv2(t, file.path(path.resume, "AB.csv"))
 
   # Unite taxonomiques
-  taxo <- add.taxo(unique(bss$object_annotation_hierarchy)) %>% add.zoo(., output)
+  taxo <- add.taxo(unique(bss$object_annotation_hierarchy)) %>% add.trophiclvl(., output)
 
   # Search for metadata if not loaded already
   if(!exists("metadata")){
