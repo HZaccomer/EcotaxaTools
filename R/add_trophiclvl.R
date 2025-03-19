@@ -1,6 +1,6 @@
 
 
-#' add.zoo
+#' add.trophiclvl
 #'
 #' Add trophic levels and OTU from a database constructed within the package, or external.
 #' object_annotation_hierarchy2 = object annotation hierarchy from ecotaxa with corrected delim >.
@@ -14,10 +14,10 @@
 #' @return A taxonomic table with also trophic levels.
 #' @export
 #'
-#' @examples add.zoo(taxo=table from add.taxo, output=where to save the table)
-add.zoo <- function(taxo, output){
+#' @examples add.trophiclvl(taxo=table from add.taxo, output=where to save the table)
+add.trophiclvl <- function(taxo, output){
   # load the original database of OTU and make it "clean"
-  zo <- zooregroup_zooscan
+  zo <- trophic_affiliation_of_organisms
   zoo <- merge(taxo, zo, all.x=T)
   zoo$Type[zoo$n1=="temporary"] <- "temporary"
   zoo$Sub_type[zoo$n1=="temporary"] <- "temporary"
@@ -46,7 +46,7 @@ add.zoo <- function(taxo, output){
       replace <- replace %>% separate(Category, into=c("Type","Sub_type")) %>%
         merge(liste.value, "Trophic") %>% select(-Trophic)
       zo <- bind_rows(zo, replace) %>% as.data.frame()
-      write_csv2(zo, file.path(output,"metadata", "zoo.csv"))
+      write_csv2(zo, file.path(output, "trophic_affiliation_of_organisms.csv"))
       # Restart the process and ignore if NA
       zoo <- merge(taxo, zo, all.x=T)
       zoo$Type[zoo$n1=="temporary"] <- "temporary"
