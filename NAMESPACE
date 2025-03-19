@@ -3,7 +3,7 @@
 export(BSS_table)
 export(NBSS.plot)
 export(add.taxo)
-export(add.zoo)
+export(add.trophiclvl)
 export(bv_to_esdum)
 export(check_metadata)
 export(compute_bv)
