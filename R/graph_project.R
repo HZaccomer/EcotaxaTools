@@ -18,7 +18,7 @@
 #' @return A set of graphics to resume the project.
 #' @export
 #'
-#' @examples graph.project(x=bss table of all the project, metadata, taxo=zoo.csv, bv.type="elli", living.only=TRUE)
+#' @examples graph.project(x=bss table of all the project, metadata, taxo=trophic_affiliation_of_organisms.csv, bv.type="elli", living.only=TRUE)
 graph.project <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
 
   x <- filter(x, type==bv.type) %>% merge(taxo, "object_annotation_hierarchy", all.x=T)
