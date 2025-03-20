@@ -44,7 +44,6 @@ compute_bv <- function(path, output, metadata=NULL) {
                                          object_lon = meta$object_lon,
                                          sample_id = meta$sample_id,
                                          sample_operator = meta$sample_operator,
-
                                          sample_total_volume = meta$sample_total_volume,
                                          sample_concentrated_sample_volume = meta$sample_concentrated_sample_volume,
                                          acq_celltype = meta$acq_celltype,
@@ -73,7 +72,6 @@ compute_bv <- function(path, output, metadata=NULL) {
                      acq_id,
                      sample_id,
                      sample_operator,
-
                      sample_total_volume,
                      sample_concentrated_sample_volume,
                      acq_celltype,
