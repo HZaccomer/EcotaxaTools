@@ -40,14 +40,14 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   div <- x %>% group_by(object_annotation_category) %>%
     summarise(AB=sum(AB, na.rm=T)) %>% select(AB) %>% vegan::diversity()
   text = paste0(
-    "\n\nTotal absolute abundance (ind.m-3):\n",
-    round(sum(x$AB, na.rm=T),4),
-    "\nTotal absolute biovolume (mm3.mm-3):\n",
-    round(sum(x$BV, na.rm=T),4),
+    "\n\nTotal absolute abundance (ind.m\u207B\u00b3):\n",
+    round(sum(x$AB, na.rm=T)),
+    "\nTotal absolute biovolume (mm\u00b3.m\u207B\u00b3):\n",
+    round(sum(x$BV, na.rm=T),2),
     "\nShannon Index:\n",
     round(div,4))
   p1 <- ggplot() +
-    annotate("text", x = 1, y=10, size=3, label = text) +
+    annotate("text", x = 1, y=1, size=4, label = text) +
     theme_void()
 
   # Relative abundance
@@ -61,7 +61,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     coord_polar("y", start=0) +
     ggtitle("Relative abundance") +
     theme_void() +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5, vjust = -4,size = 10,face = "bold"))
 
   # Relative biovolume
   tot <- sum(sum(x$BV, na.rm=T))
@@ -74,41 +74,42 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     coord_polar("y", start=0) +
     ggtitle("Relative biovolume") +
     theme_void() +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5, vjust = -4,size = 10,face = "bold"))
 
   # NBSS
   p4 <- x %>% group_by(max) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=BV)) +
-    geom_point(size=3) +
+    geom_point(size=2, fill="lightgrey", colour="black",shape=21) +
     #geom_line(size=1) +
-    scale_x_log10("Size (\u00b5m)") +
+    scale_x_log10("size on ESD (\u00b5m)") +
     scale_y_log10("NBSS (mm\u00b3.mm\u207B\u00b3.m\u207B\u00b3)", labels=trans_format('log10',math_format(10^.x))) +
-    theme_classic() +
     ggtitle("NBSS") +
-    theme(plot.title = element_text(hjust = 1, size = 0.5), legend.text = element_text(size = 0.5) )
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5, size = 10,face = "bold"), legend.text = element_text(size = 0.5))
 
   # BSS
   p5 <- x %>% group_by(max) %>% summarise(BV=sum(BV, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=BV)) +
-    geom_point(size=3) +
+    geom_point(size=2, fill="lightgrey", colour="black",shape=21) +
     #geom_line(size=1) +
-    scale_x_log10("Size (\u00b5m)") +
+    scale_x_log10("size on ESD (\u00b5m)") +
     scale_y_log10("BSS (mm\u00b3.m\u207B\u00b3)", labels=trans_format('log10',math_format(10^.x))) +
-    theme_classic() +
+    theme_bw() +
     ggtitle("BSS") +
-    theme(plot.title = element_text(hjust = 1, size = 0.5), legend.text = element_text(size = 0.5) )
+    theme(plot.title = element_text(hjust = 0.5, size = 10,face = "bold"), legend.text = element_text(size = 0.5))
 
   # BV compo/size class
   p6 <- x %>% group_by(Sub_type, max, class) %>%
     group_by(class) %>% mutate(per = BV/sum(BV, na.rm=T)*100) %>%
     group_by(class, max, Sub_type) %>% summarise(per=sum(per, na.rm=T)) %>%
-    ggplot(aes(x=bv_to_esdum(max), y=per, fill=Sub_type)) +
-    geom_col() +
+    ggplot(aes(x=bv_to_esdum(max), y=per, fill=Sub_type))+
+    geom_col(position = "stack", width = 1) +
     plankton_groups_colFill+
     ylab("Biovolume (%)") +
-    scale_x_log10("Size on ESD (\u00b5m)") +
-    ggtitle("BV composition by sub_type") +
-    theme_classic()
+    scale_x_log10("size on ESD (\u00b5m)") +
+    ggtitle("Biovolume composition per size class") +
+    theme_classic()+
+    theme(plot.title = element_text(hjust = 0.5, size = 10,face = "bold"), legend.text = element_text(size = 0.5))
 
   # Trophic pyramid p7
   x$categorie[x$Value==1] <- "Phototrophs"
@@ -126,7 +127,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     xlab(NULL) +
     ylab("Biovolume (mm\u00b3.m\u207B\u00b3)") +
     ggtitle("Trophic level biovolume") +
-    theme_minimal()
+    theme_classic()
 
   # Map
   meta.x <- filter(metadata, sample_id==unique(x$sample_id))
