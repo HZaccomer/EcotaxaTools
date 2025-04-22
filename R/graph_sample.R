@@ -22,7 +22,7 @@
 #' @examples graph.sample(x=bss of one sample, metadata, trophic_affiliation_of_organisms.csv, bv.type="elli", living.only=TRUE)
 
 graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
- 
+
   # Select type of biovolume
   x <- filter(x, type==bv.type)
 
@@ -34,11 +34,6 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     x <- filter(x, n1=="living")
     taxo <- filter(taxo, n1=="living")
   }
-
-  # Define colors according to common taxonomy vector
-  N <- length(unique(taxo$Sub_type))
-  myColors <- colorRampPalette(brewer.pal(8, "Set2"))(N)
-  names(myColors) <- unique(taxo$Sub_type)
 
   # ------------------------------------------------------------------------------
   # Resume
@@ -61,8 +56,8 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   p2 <- x %>% group_by(Sub_type) %>%
     summarise(per=sum(AB, na.rm=T)/tot*100) %>%
     ggplot(aes(x="", y=per, fill=Sub_type)) +
-    geom_bar(stat="identity", width=1, color="white") +
-    scale_fill_manual(values = myColors) +
+    geom_bar(stat="identity", width=1, size=0.15, color="black") +
+    plankton_groups_colFill+
     coord_polar("y", start=0) +
     ggtitle("Relative abundance") +
     theme_void() +
@@ -74,8 +69,8 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   p3 <- x %>% group_by(Sub_type) %>%
     summarise(per=sum(BV, na.rm=T)/tot*100) %>%
     ggplot(aes(x="", y=per, fill=Sub_type)) +
-    geom_bar(stat="identity", width=0.25, color="white") +
-    scale_fill_manual(values = myColors) +
+    geom_bar(stat="identity", width=0.25, size=0.15, color="black") +
+    plankton_groups_colFill+
     coord_polar("y", start=0) +
     ggtitle("Relative biovolume") +
     theme_void() +
@@ -85,23 +80,23 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
   p4 <- x %>% group_by(max) %>% summarise(BV=sum(BV/norm, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=BV)) +
     geom_point(size=3) +
-    geom_line(size=1) +
+    #geom_line(size=1) +
     scale_x_log10("Size (\u00b5m)") +
     scale_y_log10("NBSS (mm\u00b3.mm\u207B\u00b3.m\u207B\u00b3)", labels=trans_format('log10',math_format(10^.x))) +
-    theme_minimal() +
+    theme_classic() +
     ggtitle("NBSS") +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 1, size = 0.5), legend.text = element_text(size = 0.5) )
 
   # BSS
   p5 <- x %>% group_by(max) %>% summarise(BV=sum(BV, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=BV)) +
     geom_point(size=3) +
-    geom_line(size=1) +
+    #geom_line(size=1) +
     scale_x_log10("Size (\u00b5m)") +
     scale_y_log10("BSS (mm\u00b3.m\u207B\u00b3)", labels=trans_format('log10',math_format(10^.x))) +
-    theme_minimal() +
+    theme_classic() +
     ggtitle("BSS") +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 1, size = 0.5), legend.text = element_text(size = 0.5) )
 
   # BV compo/size class
   p6 <- x %>% group_by(Sub_type, max, class) %>%
@@ -109,11 +104,11 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     group_by(class, max, Sub_type) %>% summarise(per=sum(per, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=per, fill=Sub_type)) +
     geom_col() +
-    scale_fill_manual(values = myColors) +
+    plankton_groups_colFill+
     ylab("Biovolume (%)") +
-    scale_x_log10("Size (\u00b5m)") +
+    scale_x_log10("Size on ESD (\u00b5m)") +
     ggtitle("BV composition by sub_type") +
-    theme_minimal()
+    theme_classic()
 
   # Trophic pyramid p7
   x$categorie[x$Value==1] <- "Phototrophs"
