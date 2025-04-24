@@ -14,30 +14,108 @@
 
 graph.metadata <- function(metadata) {
   # 1. MAP
-  ex = 3
-  latmin <- min(metadata$object_lat, na.rm=T)-ex
-  lonmin <- min(metadata$object_lon, na.rm=T)-ex
-  latmax <- max(metadata$object_lat, na.rm=T)+ex
-  lonmax <- max(metadata$object_lon, na.rm=T)+ex
 
-  if(latmin<(-90)) latmin <- (-90)
-  if(lonmin<(-180)) lonmin <- -180
-  if(latmax>90) latmax <- 90
-  if(lonmax>180) lonmax <- 180
+  worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf')
+  # Transform longitudes : [-180,180] → [0,360]
+  metadata <- metadata %>%
+    mutate(object_lon_wrapped = ifelse(object_lon < 0, object_lon + 360, object_lon))
 
   metadata$time <- as.POSIXct(paste(metadata$object_date, metadata$object_time))
 
-  sf_use_s2(FALSE)
+  meta.point <- st_as_sf(metadata, coords=c("object_lon_wrapped","object_lat"), crs=4326)
 
-  worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf') %>%
-    st_crop(xmin=lonmin, xmax=lonmax, ymax=latmax, ymin=latmin)
-  meta.point <- st_as_sf(metadata, coords=c("object_lon","object_lat"), crs=st_crs(worldmap))
+  #Crop a region of interest
+  ex = 3
+  latmin <- min(metadata$object_lat, na.rm=T)-ex
+  lonmin <- min(metadata$object_lon_wrapped, na.rm=T)-ex
+  latmax <- max(metadata$object_lat, na.rm=T)+ex
+  lonmax <- max(metadata$object_lon_wrapped, na.rm=T)+ex
 
-  print(ggplot() +
-          geom_sf(data = worldmap, color=NA, fill="gray54") +
-          geom_sf(data = meta.point, size=1, aes(color=time)) +
-          ggtitle("Sampling map") +
-          theme_bw())
+  if(latmin<(-90)) latmin <- (-90)
+  if(latmax>90) latmax <- 90
+  if(lonmin<0) latmin <- 0
+  if(lonmax>360) latmax <- 360
+
+
+  ##Problem with Pacific ocean projections
+  if(any(metadata$object_lon_wrapped >= 130) | any(metadata$object_lon_wrapped <= 250)) {
+
+    #Set Robinson projection centered on Pacific
+    robinson <- "+proj=robin +lon_0=180 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+
+    world_robinson<- worldmap %>%
+      st_break_antimeridian(lon_0 = 180) %>%
+      st_transform(crs = robinson)
+
+    world_robinson_crop<- world_robinson %>%
+      st_crop(st_as_sfc(st_bbox(
+        c(xmin=lonmin, xmax=lonmax,
+          ymin=latmin, ymax=latmax), crs = 4326))%>%
+          st_transform(crs = robinson))
+
+    print(ggplot() +
+      geom_sf(data = world_robinson, color=NA, fill="gray54",) +
+      geom_sf(data = meta.point, size=1, aes(color=time)) +
+        ggtitle("Sampling map") +
+      theme_bw())
+
+    print(ggplot() +
+            geom_sf(data = world_robinson_crop, color=NA, fill="gray54",) +
+            geom_sf(data = meta.point, size=2, aes(color=time)) +
+            ggtitle("Sampling map") +
+            theme_bw())
+
+  }else{
+
+    #Set Robinson projection centered on Atlantic
+    robinson <- "+proj=robin +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+    world_robinson<- worldmap %>%
+      #st_break_antimeridian(lon_0 = 180) %>%
+      st_transform(crs = robinson)
+
+    world_robinson_crop<- world_robinson %>%
+      st_crop(st_as_sfc(st_bbox(
+        c(xmin=lonmin, xmax=lonmax,
+          ymin=latmin, ymax=latmax), crs = 4326))%>%
+          st_transform(crs = robinson))
+
+    print(ggplot() +
+      geom_sf(data = world_robinson, color=NA, fill="gray54") +
+      geom_sf(data = meta.point, size=1, aes(color=time)) +
+        ggtitle("Sampling map") +
+      theme_bw())
+
+    print(ggplot() +
+            geom_sf(data = world_robinson_crop, color=NA, fill="gray54") +
+            geom_sf(data = meta.point, size=2, aes(color=time)) +
+            ggtitle("Sampling map") +
+            theme_bw())
+  }
+
+
+  # #Crop in the region of interest
+  # ex = 3
+  # latmin <- min(metadata$object_lat, na.rm=T)-ex
+  # lonmin <- min(metadata$object_lon, na.rm=T)-ex
+  # latmax <- max(metadata$object_lat, na.rm=T)+ex
+  # lonmax <- max(metadata$object_lon, na.rm=T)+ex
+  #
+  # if(latmin<(-90)) latmin <- (-90)
+  # if(latmax>90) latmax <- 90
+  #
+  # metadata$time <- as.POSIXct(paste(metadata$object_date, metadata$object_time))
+  #
+  # sf_use_s2(FALSE)
+  #
+  # worldmap <- ne_countries(scale = 'medium', type = 'map_units', returnclass = 'sf') %>%
+  #   st_crop(xmin=lonmin, xmax=lonmax, ymax=latmax, ymin=latmin)
+  # meta.point <- st_as_sf(metadata, coords=c("object_lon","object_lat"), crs=st_crs(worldmap))
+  #
+  # print(ggplot() +
+  #         geom_sf(data = worldmap, color=NA, fill="gray54") +
+  #         geom_sf(data = meta.point, size=1, aes(color=time)) +
+  #         ggtitle("Sampling map") +
+  #         theme_bw())
 
   sf_use_s2(TRUE)
 
