@@ -28,3 +28,4 @@ add.taxo <- function(object_hierarchy_vector){
 
   return(taxo)
 }
+

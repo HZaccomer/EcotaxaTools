@@ -41,9 +41,9 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     summarise(AB=sum(AB, na.rm=T)) %>% select(AB) %>% vegan::diversity()
   text = paste0(
     "\n\nTotal absolute abundance (ind.m\u207B\u00b3):\n",
-    round(sum(x$AB, na.rm=T)),
+    round(sum(x$AB, na.rm=T),1),
     "\nTotal absolute biovolume (mm\u00b3.m\u207B\u00b3):\n",
-    round(sum(x$BV, na.rm=T),2),
+    round(sum(x$BV, na.rm=T),3),
     "\nShannon Index:\n",
     round(div,4))
   p1 <- ggplot() +
@@ -103,7 +103,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     group_by(class) %>% mutate(per = BV/sum(BV, na.rm=T)*100) %>%
     group_by(class, max, Sub_type) %>% summarise(per=sum(per, na.rm=T)) %>%
     ggplot(aes(x=bv_to_esdum(max), y=per, fill=Sub_type))+
-    geom_col(position = "stack", width = 1) +
+    geom_col(position = "fill", width = 0.02) +
     plankton_groups_colFill+
     ylab("Biovolume (%)") +
     scale_x_log10("size on ESD (\u00b5m)") +
@@ -125,7 +125,7 @@ graph.sample <- function(x, metadata, taxo, bv.type="elli", living.only=T) {
     scale_fill_brewer(palette="Set2") +
     coord_flip() +
     xlab(NULL) +
-    ylab("Biovolume (mm\u00b3.m\u207B\u00b3)") +
+    ylab("log biovolume +1 (mm\u00b3.m\u207B\u00b3)") +
     ggtitle("Trophic level biovolume") +
     theme_classic()
 
